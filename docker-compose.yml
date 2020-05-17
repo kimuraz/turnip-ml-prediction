@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:12
+    env_file:
+      - ./.env
+    restart: always
+    volumes:
+      - turnip_db_data:/var/lib/postgresql/data
+  web:
+    build: .
+    env_file:
+      - ./.env
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/opt/turnip-ml:delegated
+    depends_on:
+      - "postgres"
+    command: "yarn dev"
+
+volumes:
+  turnip_db_data:
