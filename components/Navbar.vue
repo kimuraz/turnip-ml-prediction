@@ -9,6 +9,14 @@
       <nuxt-link to="/">Home</nuxt-link>
     </a-menu-item>
 
+    <a-menu-item key="auth-datasets">
+      <nuxt-link to="/auth/datasets">Datasets</nuxt-link>
+    </a-menu-item>
+
+    <a-menu-item key="auth-training">
+      <nuxt-link to="/auth/training">Training</nuxt-link>
+    </a-menu-item>
+
     <a-menu-item key="login">
       <nuxt-link to="/login">
         Sign In
