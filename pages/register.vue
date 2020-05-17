@@ -79,33 +79,33 @@ export default {
   data() {
     return {
       form: this.$form.createForm(this, { name: 'register' })
-    }
+    };
   },
   methods: {
     register(e) {
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log(values)
+          console.log(values);
         }
-      })
+      });
     },
     compareToFirstPassword(rule, value, validateCb) {
-      const form = this.form
+      const form = this.form;
       if (value && value !== form.getFieldValue('password')) {
-        validateCb('Two passwords that you enter is inconsistent!')
+        validateCb('Two passwords that you enter is inconsistent!');
       } else {
-        validateCb()
+        validateCb();
       }
     },
     validateToNextPassword(rule, value, validateCb) {
-      const form = this.form
+      const form = this.form;
       if (value && this.confirmDirty) {
-        form.validateFields(['confirm'], { force: true })
+        form.validateFields(['confirm'], { force: true });
       }
-      validateCb()
+      validateCb();
     }
   }
-}
+};
 </script>
 
 <style lang="scss">

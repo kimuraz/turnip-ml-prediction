@@ -62,16 +62,16 @@ export default {
   data() {
     return {
       form: this.$form.createForm(this, { name: 'trainingForm' })
-    }
+    };
   },
   methods: {
     setTraining(e) {
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.$emit('start', values)
+          this.$emit('start', values);
         }
-      })
+      });
     }
   }
-}
+};
 </script>

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import * as tf from '@tensorflow/tfjs'
-import TrainingForm from '@/components/training/TrainingForm'
+import * as tf from '@tensorflow/tfjs';
+import TrainingForm from '@/components/training/TrainingForm';
 
 export default {
   name: 'Training',
@@ -19,8 +19,8 @@ export default {
   },
   methods: {
     train(e) {
-      const { epochs, layers, rate } = e
+      const { epochs, layers, rate } = e;
     }
   }
-}
+};
 </script>

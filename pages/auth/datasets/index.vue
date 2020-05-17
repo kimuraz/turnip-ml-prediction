@@ -27,16 +27,16 @@ export default {
       fileList: [],
       datasetFormat:
         '[ { "buyingPrice": 94, "monday": [ 64, 65 ], "tuesday": [ 84, 72 ], "wednesday": [ 71, 70 ], "thursday": [ 88, 96 ], "friday": [ 120, 189 ], "saturday": [ 60, 53 ] } ] '
-    }
+    };
   },
   methods: {
     handleChange({ file, fileList }) {
       if (file.status !== 'uploading') {
-        this.fileList.push(file)
+        this.fileList.push(file);
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss">

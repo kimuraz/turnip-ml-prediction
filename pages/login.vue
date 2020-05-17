@@ -56,18 +56,18 @@ export default {
   data() {
     return {
       form: this.$form.createForm(this, { name: 'login' })
-    }
+    };
   },
   methods: {
     doLogin(e) {
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log(values)
+          console.log(values);
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
