@@ -26,7 +26,7 @@ export default {
     return {
       fileList: [],
       datasetFormat:
-        '[ { "buyingPrice": 94, "monday": [ 64, 65 ], "tuesday": [ 84, 72 ], "wednesday": [ 71, 70 ], "thursday": [ 88, 96 ], "friday": [ 120, 189 ], "saturday": [ 60, 53 ] } ] '
+        '[ { "buyingPrice": 94, sellingPrices:[[ 64, 65 ], [ 84, 72 ], [ 71, 70 ],[ 88, 96 ],[ 120, 189 ],[ 60, 53 ]] } ] '
     };
   },
   methods: {

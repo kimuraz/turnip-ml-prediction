@@ -1,7 +1,7 @@
 <template>
   <a-menu
+    v-model="menu"
     theme="dark"
-    v-model="$route.name"
     mode="horizontal"
     :style="{ lineHeight: '64px' }"
   >
@@ -27,6 +27,11 @@
 
 <script>
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  data() {
+    return {
+      menu: [this.$route.name || '']
+    };
+  }
 };
 </script>
