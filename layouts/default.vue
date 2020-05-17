@@ -43,5 +43,7 @@ html {
   height: calc(100vh - 64px);
   padding: 20px;
   overflow-y: auto;
+  width: 80vw;
+  margin: auto;
 }
 </style>
