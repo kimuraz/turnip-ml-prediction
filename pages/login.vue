@@ -1,0 +1,85 @@
+<template>
+  <div id="login-page">
+    <a-card
+      class="login-card"
+      title="Sign In"
+      style="width: 30vw; min-width: 450px;"
+    >
+      <a-form formLayout="horizontal" :form="form" @submit.prevent="doLogin">
+        <a-form-item label="E-mail">
+          <a-input
+            v-decorator="[
+              'email',
+              {
+                rules: [
+                  { required: true, message: 'Please fill up your email.' },
+                  { type: 'email', message: 'Invalid format for an email.' }
+                ]
+              }
+            ]"
+          />
+        </a-form-item>
+
+        <a-form-item label="Password">
+          <a-input
+            type="password"
+            v-decorator="[
+              'password',
+              {
+                rules: [
+                  { required: true, message: 'Please fill up your password.' }
+                ]
+              }
+            ]"
+          />
+        </a-form-item>
+
+        <a-form-item class="create-link-container">
+          <nuxt-link to="/register">
+            Create account
+          </nuxt-link>
+        </a-form-item>
+
+        <a-form-item>
+          <a-button type="primary" html-type="submit">
+            Sign In
+          </a-button>
+        </a-form-item>
+      </a-form>
+    </a-card>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Login',
+  data() {
+    return {
+      form: this.$form.createForm(this, { name: 'login' })
+    }
+  },
+  methods: {
+    doLogin(e) {
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log(values)
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+#login-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .create-link-container {
+    margin: 5px 0;
+    text-align: right;
+  }
+}
+</style>
