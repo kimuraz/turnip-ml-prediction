@@ -2,9 +2,14 @@ const consola = require('consola');
 const Hapi = require('@hapi/hapi');
 const HapiNuxt = require('@nuxtjs/hapi');
 const HapiJwtAuth = require('hapi-auth-jwt2');
+const models = require('./models');
 
 const userRoutes = require('./controllers/user.controller');
-const { validateUser } = require('./controllers/user.controller');
+
+const validateUser = async (decoded, request, h) => {
+  const isValid = !!(await models.User.findByPk(decoded.id));
+  return { isValid };
+};
 
 async function start() {
   const server = new Hapi.Server({
@@ -30,6 +35,9 @@ async function start() {
       path: '/api/v1',
       handler: (request, h) => {
         return { message: 'API up' };
+      },
+      options: {
+        auth: 'jwt'
       }
     });
 

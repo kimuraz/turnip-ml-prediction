@@ -40,11 +40,6 @@ const login = async ({ email, password }) => {
   }
 };
 
-exports.validateUser = async (decoded, request, h) => {
-  const isValid = !!(await models.User.findByPk(decoded.id));
-  return { isValid };
-};
-
 const userRoutes = [
   {
     method: 'POST',

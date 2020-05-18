@@ -15,12 +15,12 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./:/opt/turnip-ml:delegated
-      - tunip_node_modules:/opt/turnip-ml/node_modules:cached
+      - ./.:/opt/turnip-ml:delegated
+      - turnip_node_modules:/opt/turnip-ml/node_modules:cached
     depends_on:
       - "postgres"
     command: "yarn dev"
 
 volumes:
   turnip_db_data:
-  tunip_node_modules:
+  turnip_node_modules:
