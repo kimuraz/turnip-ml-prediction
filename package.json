@@ -20,7 +20,10 @@
     "@tensorflow/tfjs": "^1.7.4",
     "@tensorflow/tfjs-vis": "^1.4.0",
     "ant-design-vue": "^1.1.10",
+    "bcrypt": "^4.0.1",
     "cross-env": "^5.2.0",
+    "hapi-auth-jwt2": "^10.1.0",
+    "jsonwebtoken": "^8.5.1",
     "nuxt": "^2.0.0",
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
@@ -41,6 +44,7 @@
     "nodemon": "^1.18.9",
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.2",
+    "sequelize-cli": "^5.5.1",
     "vue-jest": "^4.0.0-0"
   }
 }

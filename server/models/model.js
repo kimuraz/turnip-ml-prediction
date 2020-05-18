@@ -1,8 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.define('Model', {
-    authroId: DataTypes.INTEGER,
-    isPublic: DataTypes.BOOLEAN,
+    name: DataTypes.STRING,
+    author: DataTypes.INTEGER,
     model: DataTypes.JSONB
   }, {});
   Model.associate = function(models) {
