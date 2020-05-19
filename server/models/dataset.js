@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       authorId: DataTypes.INTEGER,
       dataset: DataTypes.JSONB,
-      isPublic: DataTypes.BOOLEAN
+      isPublic: DataTypes.BOOLEAN,
+      name: DataTypes.STRING,
     },
     {}
   );
