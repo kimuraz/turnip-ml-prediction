@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import { login } from '@/utils/api';
+
 export default {
   name: 'Login',
   data() {
@@ -59,10 +61,15 @@ export default {
     };
   },
   methods: {
-    doLogin(e) {
-      this.form.validateFields((err, values) => {
+    async doLogin(e) {
+      await this.form.validateFields(async (err, values) => {
         if (!err) {
-          console.log(values);
+          try {
+            await login(values);
+            location.href = '/';
+          } catch (err) {
+            alert(err.toString());
+          }
         }
       });
     }
