@@ -1,11 +1,19 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Dataset = sequelize.define('Dataset', {
-    author: DataTypes.INTEGER,
-    dataset: DataTypes.JSONB
-  }, {});
+  const Dataset = sequelize.define(
+    'Dataset',
+    {
+      authorId: DataTypes.INTEGER,
+      dataset: DataTypes.JSONB,
+      isPublic: DataTypes.BOOLEAN
+    },
+    {}
+  );
   Dataset.associate = function(models) {
-    // associations can be defined here
+    Dataset.belongsTo(models.User, {
+      foreignKey: 'authorId',
+      onDelete: 'cascade'
+    });
   };
   return Dataset;
 };

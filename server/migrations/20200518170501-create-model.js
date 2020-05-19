@@ -8,8 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      authroId: {
-        type: Sequelize.INTEGER
+      authorId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'Users', key: 'id' },
       },
       isPublic: {
         type: Sequelize.BOOLEAN
