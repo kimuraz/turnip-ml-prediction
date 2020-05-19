@@ -2,7 +2,9 @@
   <main>
     <h1>Training</h1>
 
-    <section>
+    <section class="half">
+      <a-button @click="toggleVis">Toggle visor</a-button>
+      <br />
       <training-form @start="train" />
     </section>
   </main>
@@ -10,6 +12,7 @@
 
 <script>
 import * as tf from '@tensorflow/tfjs';
+import * as tfvis from '@tensorflow/tfjs-vis';
 import TrainingForm from '@/components/training/TrainingForm';
 import { loadDataset } from '@/utils/api';
 
@@ -41,48 +44,42 @@ export default {
 
         const { x, y } = dataset;
 
-        // 14 is the number of days of the week
-        const xTensor = tf.tensor2d(x, [14, 1]);
-        const yTensor = tf.tensor2d(y, [1, 1]);
+        // 12 is the number of days of the week * 2 minus Sunday
+        const xTensor = tf.tensor2d(x, [x.length, 12]);
+        const yTensor = tf.tensor2d(y, [y.length, 1]);
 
         const { xs, ys } = this.normalize(xTensor, yTensor);
+
         this.model.add(
-          tf.layers.dense({ inputShape: [14, 1], units: 1, useBias: true })
+          tf.layers.dense({ inputShape: [1, 12], units: 1, useBias: true })
         );
-        this.model.add(tf.layers.dense({ units: 1, useBias: true }));
 
         for (let i = 0; i < layers; i += 1) {
           lstmLayers.push(tf.layers.lstmCell({ units: 1 }));
         }
 
-        this.model.add(
-          tf.layers.rnn({
-            cell: lstmLayers,
-            inputShape: [14, 1],
-            returnSequences: false
-          })
-        );
-
-        this.model.add(tf.layers.dense({ units: 1, inputShape: [14, 1] }));
         this.model.compile({
           optimizer: tf.train.adam(rate),
-          loss: 'meanSquaredError'
+          loss: tf.losses.meanSquaredError,
+          metrics: ['mse']
         });
 
         await this.model.fit(xs, ys, {
-          batchSize: 3,
+          batchSize: 1,
           epochs,
-          callbacks: {
-            onEpochEnd: (epoch, log) => {
-              console.log(epoch, log);
-              this.loading = false;
-            }
-          }
+          callbacks: tfvis.show.fitCallbacks(
+            { name: 'Training performance', tab: 'Training' },
+            ['loss', 'mse'],
+            { height: 200, callbacks: ['onEpochEnd'] }
+          )
         });
       } catch (err) {
         console.log(err);
         alert(err.toString());
       }
+    },
+    toggleVis() {
+      tfvis.visor().isOpen() ? tfvis.visor().close() : tfvis.visor().open();
     },
     normalize(xTensor, yTensor) {
       const xMax = xTensor.max();
@@ -105,3 +102,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.half {
+  width: 50%;
+}
+</style>

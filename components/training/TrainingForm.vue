@@ -17,8 +17,9 @@
     <a-form-item label="Learning rate">
       <a-input
         type="number"
-        :min="0.01"
-        :max="1"
+        min="0.01"
+        max="1"
+        step="0.01"
         v-decorator="[
           'rate',
           {
