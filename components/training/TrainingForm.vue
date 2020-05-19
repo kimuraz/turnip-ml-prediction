@@ -48,6 +48,23 @@
       />
     </a-form-item>
 
+    <a-form-item label="Dataset">
+      <a-select
+        v-decorator="[
+          'datasetId',
+          { rules: [{ required: true, message: 'Please choose a dataset' }] }
+        ]"
+      >
+        <a-select-option
+          v-for="dataset in datasets"
+          :key="dataset.id"
+          :value="dataset.id"
+        >
+          {{ dataset.name || `? (${dataset.id})` }}
+        </a-select-option>
+      </a-select>
+    </a-form-item>
+
     <a-form-item>
       <a-button type="primary" html-type="submit">
         Start training
@@ -57,15 +74,22 @@
 </template>
 
 <script>
+import { loadDatasetList } from '@/utils/api';
+
 export default {
   name: 'TrainingForm',
   data() {
     return {
-      form: this.$form.createForm(this, { name: 'trainingForm' })
+      form: this.$form.createForm(this, { name: 'trainingForm' }),
+      datasets: []
     };
+  },
+  async created() {
+    this.datasets = await loadDatasetList();
   },
   methods: {
     setTraining(e) {
+      e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
           this.$emit('start', values);

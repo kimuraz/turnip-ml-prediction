@@ -110,7 +110,7 @@ const datasetRoutes = [
         request.auth.credentials.id,
         request.params.id
       );
-      return h.response({ datasets, error }).code(code);
+      return h.response({ dataset: datasets, error }).code(code);
     },
     options: {
       auth: 'jwt'
