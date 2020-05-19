@@ -28,50 +28,46 @@ export default {
   data() {
     return {
       model: null,
-      loading: false
+      loading: null
     };
   },
   methods: {
     async train(e) {
       try {
+        this.loading = this.$message.loading('Action in progress..', 0);
         this.model = null;
-        this.loading = true;
         const { epochs, layers, rate, datasetId } = e;
 
         const lstmLayers = [];
 
         this.model = tf.sequential();
 
-        const dataset = await loadDataset(datasetId);
+        // 12 is the number of days of the week * 2 minus Sunday
+        this.model.add(
+          tf.layers.dense({
+            inputShape: [1],
+            units: 12,
+            useBias: true
+          })
+        );
 
-        console.log(dataset);
+        this.model.add(tf.layers.dense({ units: 12, useBias: true }));
+
+        for (let i = 0; i < layers; i += 1) {
+          lstmLayers.push(tf.layers.lstmCell({ units: 12 }));
+        }
+
+        const dataset = await loadDataset(datasetId);
 
         const { x, y } = dataset;
 
-        // 12 is the number of days of the week * 2 minus Sunday
         const xTensor = tf.tensor2d(x, [x.length, 12]);
-        const yTensor = tf.tensor1d(y, 'int32');
+        const yTensor = tf.tensor2d(y, [y.length, 1]);
 
         const { xs, ys } = this.normalize(xTensor, yTensor);
 
         xs.print();
         ys.print();
-
-        this.model.add(
-          tf.layers.dense({
-            inputShape: [1, 12],
-            activation: 'sigmoid',
-            units: 15,
-            useBias: true
-          })
-        );
-        this.model.add(tf.layers.flatten());
-
-        this.model.add(tf.layers.dense({ units: 2, useBias: true }));
-
-        for (let i = 0; i < layers; i += 1) {
-          lstmLayers.push(tf.layers.lstmCell({ units: 2 }));
-        }
 
         this.model.compile({
           optimizer: tf.train.adam(rate),
@@ -79,7 +75,7 @@ export default {
           metrics: ['mse']
         });
 
-        await this.model.fit(xs, ys, {
+        await this.model.fit(ys, xs, {
           batchSize: 1,
           epochs,
           callbacks: tfvis.show.fitCallbacks(
@@ -91,6 +87,8 @@ export default {
       } catch (err) {
         console.log(err);
         alert(err.toString());
+      } finally {
+        this.loading();
       }
     },
     toggleVis() {
