@@ -11,10 +11,14 @@
 </template>
 
 <script>
-import * as tf from '@tensorflow/tfjs';
-import * as tfvis from '@tensorflow/tfjs-vis';
 import TrainingForm from '@/components/training/TrainingForm';
 import { loadDataset } from '@/utils/api';
+
+let tf, tfvis;
+if (process.client) {
+  tf = require('@tensorflow/tfjs');
+  tfvis = require('@tensorflow/tfjs-vis');
+}
 
 export default {
   name: 'Training',
@@ -46,16 +50,27 @@ export default {
 
         // 12 is the number of days of the week * 2 minus Sunday
         const xTensor = tf.tensor2d(x, [x.length, 12]);
-        const yTensor = tf.tensor2d(y, [y.length, 1]);
+        const yTensor = tf.tensor1d(y, 'int32');
 
         const { xs, ys } = this.normalize(xTensor, yTensor);
 
+        xs.print();
+        ys.print();
+
         this.model.add(
-          tf.layers.dense({ inputShape: [1, 12], units: 1, useBias: true })
+          tf.layers.dense({
+            inputShape: [1, 12],
+            activation: 'sigmoid',
+            units: 15,
+            useBias: true
+          })
         );
+        this.model.add(tf.layers.flatten());
+
+        this.model.add(tf.layers.dense({ units: 2, useBias: true }));
 
         for (let i = 0; i < layers; i += 1) {
-          lstmLayers.push(tf.layers.lstmCell({ units: 1 }));
+          lstmLayers.push(tf.layers.lstmCell({ units: 2 }));
         }
 
         this.model.compile({
