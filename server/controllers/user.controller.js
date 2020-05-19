@@ -27,17 +27,26 @@ const saveUser = async ({ name, email, password, confirmPassword }) => {
 
 const login = async ({ email, password }) => {
   try {
-    const users = await models.User.findAll({ limit: 1, where: { email } });
-    const user = users && users.length ? users[0] : null;
+    const user = await models.User.findOne({ limit: 1, where: { email } });
+
+    if (!user) return { code: 401, error: 'Invalid credentials' };
+
     if (await bcrypt.compare(password, user.password)) {
       const token = await jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
       return { code: 200, token };
+    } else {
+      return { code: 401, error: 'Invalid credentials' };
     }
   } catch (err) {
     console.log(err);
     return { code: 500, error: err.toString() };
   }
+};
+
+exports.validateUser = async (decoded, request, h) => {
+  const isValid = !!(await models.User.findByPk(decoded.id));
+  return { isValid };
 };
 
 const userRoutes = [
