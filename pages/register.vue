@@ -1,7 +1,7 @@
 <template>
   <div id="register-page">
     <a-card title="New user" style="width: 30vw; min-width: 450px;">
-      <a-form formLayout="horizontal" :form="form" @submit.prevent="register">
+      <a-form form-layout="horizontal" :form="form" @submit.prevent="register">
         <a-form-item label="Name">
           <a-input
             v-decorator="[
@@ -31,7 +31,6 @@
 
         <a-form-item label="Password">
           <a-input
-            type="password"
             v-decorator="[
               'password',
               {
@@ -43,12 +42,12 @@
                 ]
               }
             ]"
+            type="password"
           />
         </a-form-item>
 
         <a-form-item label="Confirm password">
           <a-input
-            type="confirmPassword"
             v-decorator="[
               'password',
               {
@@ -60,6 +59,7 @@
                 ]
               }
             ]"
+            type="confirmPassword"
           />
         </a-form-item>
 

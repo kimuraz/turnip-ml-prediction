@@ -2,8 +2,6 @@
   <a-form :form="form" @submit.prevent="setTraining">
     <a-form-item label="Epochs">
       <a-input
-        type="number"
-        :min="1"
         v-decorator="[
           'epochs',
           {
@@ -11,15 +9,13 @@
             rules: [{ required: true, message: 'Please fill the epochs.' }]
           }
         ]"
+        type="number"
+        :min="1"
       />
     </a-form-item>
 
     <a-form-item label="Learning rate">
       <a-input
-        type="number"
-        min="0.01"
-        max="1"
-        step="0.01"
         v-decorator="[
           'rate',
           {
@@ -29,14 +25,15 @@
             ]
           }
         ]"
+        type="number"
+        min="0.01"
+        max="1"
+        step="0.01"
       />
     </a-form-item>
 
     <a-form-item label="Hidden LSTM Layers">
       <a-input
-        type="number"
-        :min="0"
-        :max="50"
         v-decorator="[
           'layers',
           {
@@ -46,6 +43,9 @@
             ]
           }
         ]"
+        type="number"
+        :min="0"
+        :max="50"
       />
     </a-form-item>
 

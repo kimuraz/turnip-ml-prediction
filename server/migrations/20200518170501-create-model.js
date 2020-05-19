@@ -10,7 +10,7 @@ module.exports = {
       },
       authorId: {
         type: Sequelize.INTEGER,
-        references: { model: 'Users', key: 'id' },
+        references: { model: 'Users', key: 'id' }
       },
       isPublic: {
         type: Sequelize.BOOLEAN

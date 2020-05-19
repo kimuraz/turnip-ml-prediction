@@ -5,7 +5,7 @@
       title="Sign In"
       style="width: 30vw; min-width: 450px;"
     >
-      <a-form formLayout="horizontal" :form="form" @submit.prevent="doLogin">
+      <a-form form-layout="horizontal" :form="form" @submit.prevent="doLogin">
         <a-form-item label="E-mail">
           <a-input
             v-decorator="[
@@ -22,7 +22,6 @@
 
         <a-form-item label="Password">
           <a-input
-            type="password"
             v-decorator="[
               'password',
               {
@@ -31,6 +30,7 @@
                 ]
               }
             ]"
+            type="password"
           />
         </a-form-item>
 

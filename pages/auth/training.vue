@@ -3,7 +3,7 @@
     <h1>Training</h1>
 
     <section class="half">
-      <training-form @start="train" v-show="!model" />
+      <training-form v-show="!model" @start="train" />
 
       <section v-show="model && !loading" class="result-holder">
         Model traning completed!
