@@ -25,4 +25,10 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 ```
 $ docker-compose up
+
+$ docker-compose exec web sh
+
+$ cd server
+
+$ ./setup-db.sh
 ```
