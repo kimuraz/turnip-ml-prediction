@@ -5,10 +5,11 @@ const HapiJwtAuth = require('hapi-auth-jwt2');
 const models = require('./models');
 
 const userRoutes = require('./controllers/user.controller');
+const datasetRoutes = require('./controllers/dataset.controller');
 
 const validateUser = async (decoded, request, h) => {
-  const isValid = !!(await models.User.findByPk(decoded.id));
-  return { isValid };
+  const user = await models.User.findByPk(decoded.id);
+  return { isValid: !!user, credentials: { id: user ? user.id : null } };
 };
 
 async function start() {
@@ -34,7 +35,7 @@ async function start() {
       method: 'GET',
       path: '/api/v1',
       handler: (request, h) => {
-        return { message: 'API up' };
+        return { message: 'API running' };
       },
       options: {
         auth: 'jwt'
@@ -42,6 +43,10 @@ async function start() {
     });
 
   userRoutes.forEach((r) => {
+    server.route(r);
+  });
+
+  datasetRoutes.forEach((r) => {
     server.route(r);
   });
 
