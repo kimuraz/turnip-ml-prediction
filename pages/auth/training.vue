@@ -34,7 +34,7 @@ export default {
   methods: {
     async train(e) {
       try {
-        this.loading = this.$message.loading('Action in progress..', 0);
+        this.loading = this.$message.loading('Loading dataset', 0);
         this.model = null;
         const { epochs, layers, rate, datasetId } = e;
 
@@ -58,6 +58,12 @@ export default {
         }
 
         const dataset = await loadDataset(datasetId);
+        this.loading();
+
+        this.loading = this.$message.loading(
+          `Traning model dataset (${dataset.length})...`,
+          0
+        );
 
         const { x, y } = dataset;
 
@@ -91,6 +97,7 @@ export default {
         this.loading();
       }
     },
+    testModel() {},
     toggleVis() {
       tfvis.visor().isOpen() ? tfvis.visor().close() : tfvis.visor().open();
     },
