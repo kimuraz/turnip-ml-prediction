@@ -20,7 +20,7 @@ const getDatasets = async (userId, id = null) => {
     return { error: err, code: 500 };
   }
 
-  if (!datasets || (datasets && !datasets.length)) {
+  if (!datasets) {
     return { code: 404, error: 'Not found' };
   }
 
