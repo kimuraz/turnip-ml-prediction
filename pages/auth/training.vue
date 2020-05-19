@@ -3,9 +3,17 @@
     <h1>Training</h1>
 
     <section class="half">
-      <a-button @click="toggleVis">Toggle visor</a-button>
-      <br />
-      <training-form @start="train" />
+      <training-form @start="train" v-show="!model" />
+
+      <section v-show="model && !loading" class="result-holder">
+        Model traning completed!
+
+        <section class="button-holder">
+          <a-button type="primary" @click="testModel">Test model</a-button>
+          <a-button @click="toggleVis">Toggle visor</a-button>
+          <a-button type="secondary" @click="model = null">Re-train</a-button>
+        </section>
+      </section>
     </section>
   </main>
 </template>
@@ -61,7 +69,7 @@ export default {
         this.loading();
 
         this.loading = this.$message.loading(
-          `Traning model dataset (${dataset.length})...`,
+          `Traning model dataset (${dataset.y.length})...`,
           0
         );
 
@@ -95,6 +103,7 @@ export default {
         alert(err.toString());
       } finally {
         this.loading();
+        this.loading = null;
       }
     },
     testModel() {},
@@ -123,8 +132,13 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .half {
   width: 50%;
+}
+.button-holder {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
