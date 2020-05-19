@@ -29,6 +29,9 @@ const getDatasets = async (userId, id = null) => {
 
 const newDataset = async (payload, userId) => {
   try {
+    if (!payload.name) {
+      return { code: 422, error: 'Missing field name' };
+    }
     const dataset = await models.Dataset.create({
       ...payload,
       authorId: userId
