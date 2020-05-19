@@ -36,7 +36,7 @@
       <a-input
         type="number"
         :min="0"
-        :max="10"
+        :max="50"
         v-decorator="[
           'layers',
           {
