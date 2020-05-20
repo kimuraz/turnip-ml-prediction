@@ -44,3 +44,13 @@ export const login = async (credentials) => {
   localStorage.setItem('token', token);
   return token;
 };
+
+export const getProfile = async () => {
+  const res = await fetch('/api/v1/users/profile', {
+    method: 'GET',
+    headers
+  });
+  const { user } = await res.json();
+
+  return user;
+};

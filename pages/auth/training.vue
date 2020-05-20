@@ -30,6 +30,7 @@ if (process.client) {
 
 export default {
   name: 'Training',
+  middleware: 'needsAuth',
   components: {
     TrainingForm
   },

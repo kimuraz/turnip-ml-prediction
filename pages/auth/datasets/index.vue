@@ -22,6 +22,7 @@
 <script>
 export default {
   name: 'Datasets',
+  middleware: 'needsAuth',
   data() {
     return {
       fileList: [],
