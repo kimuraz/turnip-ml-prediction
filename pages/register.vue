@@ -76,6 +76,11 @@
 <script>
 export default {
   name: 'Register',
+  middleware({ store, redirect }) {
+    if (store.state.user) {
+      redirect('/');
+    }
+  },
   data() {
     return {
       form: this.$form.createForm(this, { name: 'register' })

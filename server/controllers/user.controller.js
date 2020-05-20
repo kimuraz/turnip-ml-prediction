@@ -44,6 +44,20 @@ const login = async ({ email, password }) => {
   }
 };
 
+const profile = async (userId) => {
+  try {
+    const user = await models.User.findByPk(userId);
+    if (!user) return { code: 404, error: 'User not found' };
+
+    const { name, email } = user;
+
+    return { code: 200, user: { name, email } };
+  } catch (err) {
+    console.log(err);
+    return { code: 500, error: err.toString() };
+  }
+};
+
 exports.validateUser = async (decoded, request, h) => {
   const isValid = !!(await models.User.findByPk(decoded.id));
   return { isValid };
@@ -70,6 +84,17 @@ const userRoutes = [
     },
     options: {
       auth: false
+    }
+  },
+  {
+    method: 'GET',
+    path: `${basePath}/profile`,
+    handler: async (request, h) => {
+      const { user, error, code } = await profile(request.auth.credentials.id);
+      return h.response({ user, error }).code(code);
+    },
+    options: {
+      auth: 'jwt'
     }
   }
 ];

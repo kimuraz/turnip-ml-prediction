@@ -51,10 +51,16 @@
 </template>
 
 <script>
-import { login } from '@/utils/api';
+import { mapMutations } from 'vuex';
+import { login, getProfile } from '@/utils/api';
 
 export default {
   name: 'Login',
+  middleware({ store, redirect }) {
+    if (store.state.user) {
+      redirect('/');
+    }
+  },
   data() {
     return {
       form: this.$form.createForm(this, { name: 'login' })
@@ -65,14 +71,19 @@ export default {
       await this.form.validateFields(async (err, values) => {
         if (!err) {
           try {
-            await login(values);
-            location.href = '/';
+            const token = await login(values);
+            const user = await getProfile();
+
+            this.setUser({ ...user, token });
+
+            window.location.href = '/';
           } catch (err) {
             alert(err.toString());
           }
         }
       });
-    }
+    },
+    ...mapMutations(['setUser'])
   }
 };
 </script>
