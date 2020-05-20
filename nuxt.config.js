@@ -4,13 +4,13 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Turnip ML Prediction',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
-        name: 'description',
+        name: 'Turnip Machine Learning Predictions',
         content: process.env.npm_package_description || ''
       }
     ],
