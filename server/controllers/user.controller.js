@@ -66,7 +66,7 @@ exports.validateUser = async (decoded, request, h) => {
 const userRoutes = [
   {
     method: 'POST',
-    path: `${basePath}/new`,
+    path: basePath,
     handler: async (request, h) => {
       const { user, error, code } = await saveUser(request.payload);
       return h.response({ user, error }).code(code);

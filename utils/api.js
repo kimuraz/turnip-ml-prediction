@@ -33,6 +33,18 @@ export const loadDataset = async (id) => {
   );
 };
 
+export const newUser = async (newUser) => {
+  const res = await fetch('/api/v1/users', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(newUser)
+  });
+
+  const { user, error } = await res.json();
+  if (error) throw new Error(error);
+  return user;
+};
+
 export const login = async (credentials) => {
   const res = await fetch('/api/v1/users/auth', {
     method: 'POST',
