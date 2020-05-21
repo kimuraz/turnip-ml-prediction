@@ -49,7 +49,7 @@
         <a-form-item label="Confirm password">
           <a-input
             v-decorator="[
-              'password',
+              'confirmPassword',
               {
                 rules: [
                   { required: true, message: 'Please fill up your password.' },
@@ -59,7 +59,7 @@
                 ]
               }
             ]"
-            type="confirmPassword"
+            type="password"
           />
         </a-form-item>
 
@@ -74,6 +74,8 @@
 </template>
 
 <script>
+import { newUser } from '@/utils/api';
+
 export default {
   name: 'Register',
   middleware({ store, redirect }) {
@@ -87,17 +89,23 @@ export default {
     };
   },
   methods: {
-    register(e) {
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          console.log(values);
-        }
-      });
+    async register(e) {
+      try {
+        await this.form.validateFields(async (err, values) => {
+          if (!err) {
+            await newUser(values);
+            alert('User successfully crated!');
+            window.location.href = '/login';
+          }
+        });
+      } catch (err) {
+        alert(err);
+      }
     },
     compareToFirstPassword(rule, value, validateCb) {
       const form = this.form;
       if (value && value !== form.getFieldValue('password')) {
-        validateCb('Two passwords that you enter is inconsistent!');
+        validateCb('Your passwords must match!');
       } else {
         validateCb();
       }
