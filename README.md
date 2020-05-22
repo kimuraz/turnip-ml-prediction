@@ -5,6 +5,9 @@
 ## Build Setup
 
 ```bash
+# copy environment file
+$ cp .env.example .env
+
 # install dependencies
 $ yarn install
 
@@ -24,6 +27,8 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 ## Using docker (and docker-compose)
 
 ```
+$ cp .env.example .env
+
 $ docker-compose up
 
 $ docker-compose exec web sh
