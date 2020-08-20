@@ -21,7 +21,7 @@
     "@tensorflow/tfjs": "1.0.0",
     "@tensorflow/tfjs-vis": "1.0.2",
     "ant-design-vue": "^1.1.10",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "cross-env": "^5.2.0",
     "hapi-auth-jwt2": "^10.1.0",
     "jsonwebtoken": "^8.5.1",
